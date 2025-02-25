@@ -4,4 +4,5 @@ const nextConfig = {
     reactStrictMode: true,
 }
 
+// added to trigger deployment gh-pages
 module.exports = nextConfig
