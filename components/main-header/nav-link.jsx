@@ -10,7 +10,7 @@ const NavLink = ({ href, children }) => {
     <Link
       href={href}
       className={
-        pathname === href ? `${classes.link} ${classes.active}` : classes.link
+        pathname.startsWith(href) ? `${classes.link} ${classes.active}` : classes.link
       }
     >
       {children}

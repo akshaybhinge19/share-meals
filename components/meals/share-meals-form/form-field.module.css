@@ -1,0 +1,10 @@
+.required {
+  color: #f9572a;
+}
+/* width should be as per parent and can not be resized horizontally*/
+.instructions {
+  width: 100%;
+  min-height: 10rem;
+  margin-top: 1rem;
+  resize: vertical;
+}

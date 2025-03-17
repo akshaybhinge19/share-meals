@@ -1,16 +1,32 @@
 "use client";
-// import { useActionState } from "react";
 
-import { useFormState } from "react-dom";
-
-import ImagePicker from "@/components/meals/image-picker";
-import classes from "./page.module.css";
+import { useForm } from "react-hook-form";
 import { shareMeal } from "@/lib/actions";
-import MealsFormSubmit from "@/components/meals/meals-form-submit";
+import MealsFormSubmit from "@/components/meals/share-meals-form/meals-form-submit";
+import ImagePicker from "@/components/meals/share-meals-form/image-picker";
+import FormInput from "@/components/meals/share-meals-form/form-input"
+import FormTextArea from "../../../components/meals/share-meals-form/form-textarea"
+import classes from "./page.module.css";
 
 const Share = () => {
-  // const [state, formAction] = useActionState(shareMeal, { message: null });
-  const [state, formAction] = useFormState(shareMeal, { message: null });
+  const { register, handleSubmit, formState: { errors }, control, getValues} = useForm();
+  async function onSubmit(data) {
+    const formData = new FormData();
+    
+    // Adding text fields to FormData
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("title", data.title);
+    formData.append("summary", data.summary);
+    formData.append("instructions", data.instructions);
+    
+    if (data.image && data.image.length > 0) {
+      formData.append("image", data.image[0]);
+    }
+    
+    await shareMeal(formData);
+  }
+
   return (
     <>
       <header className={classes.header}>
@@ -20,39 +36,17 @@ const Share = () => {
         <p>Or any other meal you feel sharing!</p>
       </header>
       <main className={classes.main}>
-        <form className={classes.form} action={formAction}>
+        <form className={classes.form} onSubmit={handleSubmit(onSubmit)} noValidate>
           <div className={classes.row}>
-            <p>
-              <label htmlFor="name">Your name</label>
-              <input type="text" id="name" name="name" required />
-            </p>
-            <p>
-              <label htmlFor="email">Your email</label>
-              <input type="email" id="email" name="email" required />
-            </p>
+            <FormInput id={"name"} label={"Your name"} type={"text"} register={register} errors={errors} required={true}/>
+            <FormInput id={"email"} label={"Your email"} type={"email"} register={register} errors={errors} required={true}/>
           </div>
-          <p>
-            <label htmlFor="title">Title</label>
-            <input type="text" id="title" name="title" required />
-          </p>
-          <p>
-            <label htmlFor="summary">Short Summary</label>
-            <input type="text" id="summary" name="summary" required />
-          </p>
-          <p>
-            <label htmlFor="instructions">Instructions</label>
-            <textarea
-              id="instructions"
-              name="instructions"
-              rows="10"
-              required
-            />
-          </p>
+          <FormInput id={"title"} label={"Title"} type={"text"} register={register} errors={errors} required={true}/>
+          <FormInput id={"summary"} label={"Short Summary"} type={"text"} register={register} errors={errors} required={true}/>
+          <FormTextArea id={"instructions"} label={"Instructions"} rows={10} register={register} errors={errors} required={true} className={'instructions'}/>
           {/* Image Picker */}
-          <ImagePicker label={"Your Image"} name={"image"} />
-          {state.message && <p>{state.message}</p>}
+          <ImagePicker label={"Your Image"} name={"image"} register={register} errors={errors} control={control}/>
           <p className={classes.actions}>
-            {/* <button type="submit">Share Meal</button> */}
             <MealsFormSubmit />
           </p>
         </form>

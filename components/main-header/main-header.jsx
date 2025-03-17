@@ -11,10 +11,12 @@ const MainHeader = () => {
     <>
       <MainHeaderBackground />
       <header className={classes.header}>
+        {/* logo and navigation to home */}
         <Link href={"/"} className={classes.logo}>
           <Image src={logoImage} alt="A plate with food on it" priority />
         </Link>
 
+        {/* navigation section */}
         <nav className={classes.nav}>
           <ul>
             <li>

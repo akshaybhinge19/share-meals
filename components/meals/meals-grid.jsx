@@ -1,5 +1,4 @@
 import classes from "./meals-grid.module.css";
-
 import MealItem from "./meal-item";
 
 const MealsGrid = (props) => {
