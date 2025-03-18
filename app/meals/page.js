@@ -3,15 +3,7 @@ import Link from "next/link";
 import classes from "./page.module.css";
 
 import MealsGrid from "@/components/meals/meals-grid";
-import { getMeals } from "@/lib/meals";
 import Loading from "./loading-out";
-
-// TODO: implement this in seperate component
-// to wait to render other content which is not having dependency on Meals
-const Meals = async () => {
-  const meals = await getMeals();
-  return <MealsGrid meals={meals} />;
-};
 
 const MealsPage = () => {
   return (
@@ -29,7 +21,7 @@ const MealsPage = () => {
       <main className={classes.main}>
         {/* loading state as fallback while fetching meals */}
         <Suspense fallback={<Loading />}>
-          <Meals />
+          <MealsGrid />
         </Suspense>
       </main>
     </>
