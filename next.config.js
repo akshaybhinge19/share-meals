@@ -5,7 +5,7 @@ const nextConfig = {
 //     unoptimized: true, // Disable Image Optimization API
 //   },
   experimental: {
-    serverActions: true,
+    // serverActions: true,
     serverComponentsExternalPackages: ["better-sqlite3"],
   },
   reactStrictMode: true,
